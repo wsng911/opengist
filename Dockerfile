@@ -1,70 +1,35 @@
-FROM alpine:3.22 AS base
+FROM golang:1.23-alpine AS builder
 
-RUN apk update && \
-        apk add --no-cache \
-        make \
-        gcc \
-        git \
-        musl-dev \
-        libstdc++
+WORKDIR /app
 
-COPY --from=golang:1.25.6-alpine3.22 /usr/local/go/ /usr/local/go/
-ENV PATH="/usr/local/go/bin:${PATH}"
-ENV CGO_ENABLED=0
+RUN apk add --no-cache git nodejs npm && \
+    git config --global user.email "dev@example.com" && \
+    git config --global user.name "dev"
 
-COPY --from=node:24.13.0-alpine3.22 /usr/local/ /usr/local/
-ENV NODE_PATH="/usr/local/lib/node_modules"
-ENV PATH="/usr/local/bin:${PATH}"
-
-WORKDIR /opengist
+COPY go.mod go.sum ./
+RUN go mod download
 
 COPY . .
 
+RUN git init && git add -A && git commit -m "init" || true
 
-FROM base AS dev
-RUN apk add --no-cache \
-    openssl \
-    openssh-server \
-    curl \
-    wget \
-    git \
-    gnupg \
-    xz
+RUN npm install && npm run build && \
+    CGO_ENABLED=0 go build -o opengist ./cmd/opengist/main.go
 
-EXPOSE 6157 6158 2222 16157
+FROM alpine:latest
 
-RUN git config --global --add safe.directory /opengist
-RUN make install
+WORKDIR /app
 
-VOLUME /opengist
+RUN apk add --no-cache git openssh
 
-CMD ["make", "watch"]
+COPY --from=builder /app/opengist ./opengist
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/templates ./templates
 
+RUN mkdir -p /opengist
 
-FROM base AS build
+ENV OPENGIST_HOME=/opengist
 
-RUN make
+EXPOSE 6157
 
-
-FROM alpine:3.22 AS prod
-
-RUN apk update && \
-    apk add --no-cache \
-    shadow \
-    openssh-server \
-    curl \
-    git
-
-RUN addgroup -S opengist && \
-    adduser -S -G opengist -s /bin/ash -g 'Opengist User' opengist
-
-WORKDIR /app/opengist
-
-COPY --from=build --chown=opengist:opengist /opengist/config.yml /config.yml
-COPY --from=build --chown=opengist:opengist /opengist/opengist .
-COPY --from=build --chown=opengist:opengist /opengist/docker ./docker
-
-EXPOSE 6157 6158 2222
-VOLUME /opengist
-HEALTHCHECK --interval=60s --timeout=30s --start-period=15s --retries=3 CMD curl -f http://localhost:6157/healthcheck || exit 1
-ENTRYPOINT ["./docker/entrypoint.sh"]
+CMD ["./opengist", "--config", "/opengist/config.yml"]

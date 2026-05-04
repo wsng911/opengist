@@ -63,7 +63,7 @@
                                     {{ if eq .ScopeGist 1 }}{{ $.locale.Tr "settings.token-permission-read" }}{{ end }}
                                     {{ if eq .ScopeGist 2 }}{{ $.locale.Tr "settings.token-permission-read-write" }}{{ end }}
                                 </p>
-                                <p class="text-xs text-gray-500 line-clamp-2">{{ $.locale.Tr "settings.token-created-at" }} <span>{{ .CreatedAt | humanDate }}</span></p>
+                                <p class="text-xs text-gray-500 line-clamp-2">{{ $.locale.Tr "settings.token-created-at" }} <span>{{ .创建dAt | humanDate }}</span></p>
                                 {{ if eq .ExpiresAt 0 }}
                                 <p class="text-xs text-gray-500 line-clamp-2">{{ $.locale.Tr "settings.token-no-expiration" }}</p>
                                 {{ else }}

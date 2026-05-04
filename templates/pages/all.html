@@ -7,18 +7,18 @@
                 <div class="flex items-center">
                     <div class="shrink-0">
                         {{ if not (shouldGenerateAvatar .fromUser .DisableGravatar) }}
-                            <img class="h-12 w-12 rounded-md mr-2 border border-gray-200 dark:border-gray-700" src="{{ avatarUrl .fromUser .DisableGravatar }}" alt="{{ .fromuser.Username }}'s Avatar">
+                            <img class="h-12 w-12 rounded-md mr-2 border border-gray-200 dark:border-gray-700" src="{{ avatarUrl .fromUser .DisableGravatar }}" alt="{{ .fromuser.用户名 }}'s Avatar">
                         {{ else }}
                             <svg class="h-12 w-12 rounded-md mr-2 border border-gray-200 dark:border-gray-700"
-                                 data-jdenticon-value="{{ .fromUser.Username }}"
+                                 data-jdenticon-value="{{ .fromUser.用户名 }}"
                                  width="48"
                                  height="48">
                             </svg>
                         {{ end }}
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold leading-tight">{{.fromUser.Username}}</h1>
-                        <p class="text-sm text-slate-500">{{ .locale.Tr "gist.list.joined" }} <span>{{.fromUser.CreatedAt | humanTimeDiff}}</span></p>
+                        <h1 class="text-2xl font-bold leading-tight">{{.fromUser.用户名}}</h1>
+                        <p class="text-sm text-slate-500">{{ .locale.Tr "gist.list.joined" }} <span>{{.fromUser.创建dAt | humanTimeDiff}}</span></p>
                     </div>
                 </div>
                 {{ else }}
@@ -73,16 +73,16 @@
             <div class="sm:hidden">
                 <label for="tabs" class="sr-only">{{ .locale.Tr "gist.list.select-tab" }}</label>
                 <select id="gist-tabs" name="tabs" class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm dark:bg-gray-800 dark:border-gray-700">
-                    <option {{if eq .mode "fromUser"}}selected {{end}}data-url="/{{ .fromUser.Username }}">{{ .locale.Tr "gist.list.all" }} ({{ .countFromUser }})</option>
-                    {{ if ne .countLiked 0 }}<option {{if eq .mode "liked"}}selected {{end}}data-url="/{{ .fromUser.Username }}/liked">{{ .locale.Tr "gist.list.liked" }} ({{ .countLiked }})</option>{{end}}
-                    {{ if ne .countForked 0 }}<option {{if eq .mode "forked"}}selected {{end}}data-url="/{{ .fromUser.Username }}/forked">{{ .locale.Tr "gist.list.forked" }} ({{ .countForked }})</option>{{end}}
+                    <option {{if eq .mode "fromUser"}}selected {{end}}data-url="/{{ .fromUser.用户名 }}">{{ .locale.Tr "gist.list.all" }} ({{ .countFromUser }})</option>
+                    {{ if ne .countLiked 0 }}<option {{if eq .mode "liked"}}selected {{end}}data-url="/{{ .fromUser.用户名 }}/liked">{{ .locale.Tr "gist.list.liked" }} ({{ .countLiked }})</option>{{end}}
+                    {{ if ne .count复刻ed 0 }}<option {{if eq .mode "forked"}}selected {{end}}data-url="/{{ .fromUser.用户名 }}/forked">{{ .locale.Tr "gist.list.forked" }} ({{ .count复刻ed }})</option>{{end}}
                 </select>
             </div>
             <div class="hidden sm:block">
                 <div class="border-b border-gray-200 dark:border-gray-700 flex">
                     <div class="flex-auto">
                         <nav class="-mb-px flex space-x-6" aria-label="Tabs">
-                            <a href="{{ $.c.ExternalUrl }}/{{ .fromUser.Username }}" class="{{if eq .mode "fromUser"}}border-primary-500 font-bold {{else}}border-transparent hover:border-gray-200 hover:text-gray-700{{end}} text-slate-700 dark:text-slate-300 inline-flex items-center whitespace-nowrap border-b-2 py-2 px-1 text-sm">
+                            <a href="{{ $.c.ExternalUrl }}/{{ .fromUser.用户名 }}" class="{{if eq .mode "fromUser"}}border-primary-500 font-bold {{else}}border-transparent hover:border-gray-200 hover:text-gray-700{{end}} text-slate-700 dark:text-slate-300 inline-flex items-center whitespace-nowrap border-b-2 py-2 px-1 text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
                                 </svg>
@@ -90,7 +90,7 @@
                                 <span class="bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-slate-300 ml-2 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">{{ .countFromUser }}</span>
                             </a>
                             {{ if ne .countLiked 0 }}
-                            <a href="{{ $.c.ExternalUrl }}/{{ .fromUser.Username }}/liked" class="{{if eq .mode "liked"}}border-primary-500 font-bold {{else}}border-transparent hover:border-gray-200 hover:text-gray-700{{end}} text-slate-700 dark:text-slate-300 inline-flex items-center whitespace-nowrap border-b-2 py-2 px-1 text-sm">
+                            <a href="{{ $.c.ExternalUrl }}/{{ .fromUser.用户名 }}/liked" class="{{if eq .mode "liked"}}border-primary-500 font-bold {{else}}border-transparent hover:border-gray-200 hover:text-gray-700{{end}} text-slate-700 dark:text-slate-300 inline-flex items-center whitespace-nowrap border-b-2 py-2 px-1 text-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mr-1">
                                     <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                                 </svg>
@@ -98,13 +98,13 @@
                                 <span class="bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-slate-300 ml-2 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">{{ .countLiked }}</span>
                             </a>
                             {{ end }}
-                            {{ if ne .countForked 0 }}
-                            <a href="{{ $.c.ExternalUrl }}/{{ .fromUser.Username }}/forked" class="{{if eq .mode "forked"}}border-primary-500 font-bold {{else}}border-transparent hover:border-gray-200 hover:text-gray-700{{end}} text-slate-700 dark:text-slate-300 inline-flex items-center whitespace-nowrap border-b-2 py-2 px-1 text-sm" aria-current="page">
+                            {{ if ne .count复刻ed 0 }}
+                            <a href="{{ $.c.ExternalUrl }}/{{ .fromUser.用户名 }}/forked" class="{{if eq .mode "forked"}}border-primary-500 font-bold {{else}}border-transparent hover:border-gray-200 hover:text-gray-700{{end}} text-slate-700 dark:text-slate-300 inline-flex items-center whitespace-nowrap border-b-2 py-2 px-1 text-sm" aria-current="page">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
                                 </svg>
                                 {{ .locale.Tr "gist.list.forked" }}
-                                <span class="bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-slate-300 ml-2 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">{{ .countForked }}</span>
+                                <span class="bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-slate-300 ml-2 hidden rounded-full py-0.5 px-2.5 text-xs font-medium md:inline-block">{{ .count复刻ed }}</span>
                             </a>
                             {{ end }}
                         </nav>
@@ -116,7 +116,7 @@
     </header>
     <main>
         {{if eq .mode "fromUser"}}
-        <form action="{{ $.c.ExternalUrl }}/{{ .fromUser.Username }}">
+        <form action="{{ $.c.ExternalUrl }}/{{ .fromUser.用户名 }}">
             <div class="grid grid-cols-12 gap-x-1 pb-4">
                 <div class="col-span-3">
                     <input type="text" name="title" value="{{ .title }}" placeholder="{{ .locale.Tr "gist.search.placeholder.title"}}" class="bg-white dark:bg-gray-900 shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-xs border-gray-200 dark:border-gray-700 rounded-md py-1.5" />

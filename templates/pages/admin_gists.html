@@ -21,12 +21,12 @@
         {{ range $gist := .data }}
             <tr>
                 <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-slate-700 dark:text-slate-300 sm:pl-0">{{ $gist.ID }}</td>
-                <td class="whitespace-nowrap px-2 py-2 text-sm text-slate-700 dark:text-slate-300"><a href="{{ $.c.ExternalUrl }}/{{ $gist.User.Username }}/{{ $gist.Identifier }}">{{ $gist.Title }}</a></td>
-                <td class="whitespace-nowrap px-2 py-2 text-sm text-slate-700 dark:text-slate-300"><a href="{{ $.c.ExternalUrl }}/{{ $gist.User.Username }}">{{ $gist.User.Username }}</a></td>
-                <td class="whitespace-nowrap px-2 py-2 text-sm text-slate-700 dark:text-slate-300">{{ $gist.Private }}</td>
-                <td class="whitespace-nowrap px-2 py-2 text-sm text-slate-700 dark:text-slate-300">{{ $gist.NbFiles }}</td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-slate-700 dark:text-slate-300"><a href="{{ $.c.ExternalUrl }}/{{ $gist.User.用户名 }}/{{ $gist.Identifier }}">{{ $gist.Title }}</a></td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-slate-700 dark:text-slate-300"><a href="{{ $.c.ExternalUrl }}/{{ $gist.User.用户名 }}">{{ $gist.User.用户名 }}</a></td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-slate-700 dark:text-slate-300">{{ $gist.私有 }}</td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-slate-700 dark:text-slate-300">{{ $gist.Nb文件 }}</td>
                 <td class="whitespace-nowrap px-2 py-2 text-sm text-slate-700 dark:text-slate-300">{{ $gist.NbLikes }}</td>
-                <td class="whitespace-nowrap px-2 py-2 text-sm text-slate-700 dark:text-slate-300"><span>{{ $gist.CreatedAt | humanDate }}</span></td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-slate-700 dark:text-slate-300"><span>{{ $gist.创建dAt | humanDate }}</span></td>
                 <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                     <form action="{{ $.c.ExternalUrl }}/admin-panel/gists/{{ $gist.ID }}/delete" method="POST">
                         {{ $.csrfHtml }}

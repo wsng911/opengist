@@ -32,8 +32,8 @@
                 </div>
             </div>
             <div id="editors" class="space-y-4">
-                {{ if .dto.Files }}
-                    {{ range .dto.Files }}
+                {{ if .dto.文件 }}
+                    {{ range .dto.文件 }}
                         {{ template "_editor" dict "Filename" .Filename "Content" .Content "locale" $.locale }}
                     {{ end }}
                 {{ else }}
